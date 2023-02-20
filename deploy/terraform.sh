@@ -7,8 +7,9 @@ echo $folder
 echo $action
 cd $folder
 terraform init
- if $action==plan (
+if [ $action=plan ]
+then
     terraform $action
- ) else (
-    terraform $action -auto-approve
- )
+else
+   terraform $action -auto-approve
+fi
