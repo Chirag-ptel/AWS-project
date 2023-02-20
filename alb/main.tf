@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-module "vpc-data" {
+module "lib" {
   source = "../lib/"
 }
 
