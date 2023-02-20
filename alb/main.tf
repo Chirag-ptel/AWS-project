@@ -27,8 +27,8 @@ resource "aws_lb" "alb" {
   name               = "my-alb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [data.terraform_remote_state.vpc.outputs.default_security_group_id]
-  subnets            = data.terraform_remote_state.vpc.outputs.public_subnets
+  security_groups    = [module.lib.default_security_group_id]
+  subnets            = module.lib.public_subnets
 
   tags = {
     Name = "my-alb"
@@ -51,7 +51,7 @@ resource "aws_lb_target_group" "alb_target_group" {
   port               = 80
   protocol           = "HTTP"
   target_type        = "ip"
-  vpc_id             = data.terraform_remote_state.vpc.outputs.vpc_id
+  vpc_id             = module.lib.vpc_id
 
  /* health_check {
     healthy_threshold   = 2
