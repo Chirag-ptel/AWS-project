@@ -2,18 +2,18 @@ provider "aws" {
   region = "us-east-1"
 }
 
-/*module "vpc-data" {
+module "vpc-data" {
   source = "../lib/"
-}*/
+}
 
-data "terraform_remote_state" "vpc" {
+/*data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
     bucket = "my-s3-bucket-for-tfstate"
     key    = "quest/dev/vpc/terraform.tfstate"
     region = "us-east-1"
   }
-}
+}*/
 
 terraform {
   backend "s3" {
