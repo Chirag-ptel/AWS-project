@@ -24,7 +24,7 @@ terraform {
 }
 
 resource "aws_lb" "alb" {
-  name               = "my-alb"
+  name               = var.name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [module.lib.default_security_group_id]
