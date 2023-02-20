@@ -1,8 +1,10 @@
-dir
-$folder=$args[0]
-$action=$args[1]
-write-host $folder
-write-host $action
+#!/bin/sh
+echo "hello"
+ls
+folder=$1
+action=$2
+echo $folder
+echo $action
 cd $folder
 terraform init
  if $action==plan (
