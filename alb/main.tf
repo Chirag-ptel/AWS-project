@@ -31,7 +31,7 @@ resource "aws_lb" "alb" {
   subnets            = module.lib.public_subnets
 
   tags = {
-    Name = "my-alb"
+    Name = "var.name"
   }
 }
 
@@ -47,7 +47,7 @@ resource "aws_lb_listener" "alb_listener" {
 }
 
 resource "aws_lb_target_group" "alb_target_group" {
-  name_prefix        = "my-tg"
+  name_prefix        = "var.name"
   port               = 80
   protocol           = "HTTP"
   target_type        = "ip"
@@ -63,7 +63,7 @@ resource "aws_lb_target_group" "alb_target_group" {
   }*/
 
   tags = {
-    Name = "my-tg"
+    Name = "var.name"
   }
 }
 
