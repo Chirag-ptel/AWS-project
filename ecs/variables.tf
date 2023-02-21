@@ -3,7 +3,7 @@ variable "name" {
   description = "The name prefix for the resource."
 }
 
-variable "container_definitions" {
+/*variable "container_definitions" {
   type = list
   description = "A list of container definitions for the task"
 }
@@ -28,4 +28,4 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions    = var.container_definitions
   network_mode             = var.network_mode
   task_role_arn            = var.task_role_arn
-}
+}*/
