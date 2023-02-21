@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 resource "aws_iam_role" "ecs_task_execution_role" {
   name = "${var.name}-ecs-task-role"
   assume_role_policy = jsonencode({
