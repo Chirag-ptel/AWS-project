@@ -39,10 +39,10 @@ resource "aws_ecs_cluster""ecs-cluster" {
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family                   = "${var.name}-task"
   container_definitions    = jsonencode([{
-    name  = "${var.name}-ecs-task-definition"
-    image = var.container_image
-    task_definition_cpu    = var.task_definition_cpu
-    task_definition_memory = var.task_definition_memory
+    name   = "${var.name}-ecs-task-definition"
+    image  = var.container_image
+    cpu    = var.task_definition_cpu
+    memory = var.task_definition_memory
     portMappings = [{
       containerPort = var.task_container_port
     }]
