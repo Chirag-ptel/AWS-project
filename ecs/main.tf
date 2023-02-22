@@ -78,6 +78,6 @@ resource "aws_ecs_service" "ecs-service" {
   }*/
 }
 
-/*output "task_definition_family" {
+output "task_definition_family" {
   value =aws_ecs_task_definition.my_task_definition.family
-}*/
+}
