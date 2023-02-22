@@ -18,21 +18,38 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 }
 
+/*resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
+  role       = aws_iam_role.ecs_task_execution_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}*/
 
-/*resource "aws_ecs_task_definition" "example_task" {
-  family                   = var.task_name
+resource "aws_ecs_cluster""ecs-cluster" {
+  name = "${var.name}-ecs-cluster"
+}
+
+resource "aws_ecs_task_definition" "ecs-task-definition" {
+  family                   = "${var.name}-task"
+  task_definition_cpu = var.task_definition_cpu
+  task_definition_memory = var.task_definition_memory
   container_definitions    = jsonencode([{
-    name  = "example_container"
-    image = var.image_name
+    name  = "${var.name}-ecs-task-definition"
+    image = var.container_image
     portMappings = [{
-      containerPort = var.container_port
+      containerPort = var.task_container_port
     }]
-    environment = [{
+    /*environment = [{
       name  = "EXAMPLE_ENV_VAR"
       value = var.example_env_var
-    }]
+    }]*/
   }])
   network_mode             = "awsvpc"
-  task_role_arn            = var.task_role_arn
-  execution_role_arn       = var.execution_role_arn
-}*/
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+}
+
+resource "aws_ecs_service" "ecs-service" {
+  name = "${var.name}-ecs-service"
+  cluster = aws_ecs_cluster.ecs-cluster.id
+  task_definition = aws_ecs_task_definition.ecs-task-definition.arn
+  desired_count = var.desired-td-count
+  launch_type = "FARGATE"
+}

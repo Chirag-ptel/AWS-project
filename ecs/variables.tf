@@ -6,6 +6,36 @@ variable "name" {
 /*variable "container_definitions" {
   type = list
   description = "A list of container definitions for the task"
+}*/
+
+variable "container_image" {
+  type = string
+  description = "the image used to start the container"
+  
+}
+
+variable "task_container_port" {
+  description = "The port number on the container that is bound to the user-specified or automatically assigned host port"
+  type        = number
+  default     = 80
+}
+
+variable "task_host_port" {
+  description = "The port number on the container instance to reserve for your container."
+  type        = number
+  default     = 80
+}
+
+variable "task_definition_cpu" {
+  description = "Amount of CPU to reserve for the task."
+  default     = 256
+  type        = number
+}
+
+variable "task_definition_memory" {
+  description = "The soft limit (in MiB) of memory to reserve for the task."
+  default     = 512
+  type        = number
 }
 
 variable "family" {
@@ -23,9 +53,11 @@ variable "task_role_arn" {
   description = "The ARN of the IAM role that grants permissions for the task"
 }
 
-resource "aws_ecs_task_definition" "task_definition" {
-  family                   = var.family
-  container_definitions    = var.container_definitions
-  network_mode             = var.network_mode
-  task_role_arn            = var.task_role_arn
-}*/
+variable "desired-td-count" {
+  type = string
+  description = "The count of the task's desired count"
+  default = "1"
+}
+
+
+
