@@ -51,10 +51,11 @@ resource  "aws_lb_target_group" "alb_target_group" {
   port               = 80
   protocol           = "HTTP"
   target_type        = "ip"
-  vpc_id             = module.lib.vpc_id
-  targets = [
+   targets = [
     "${module.lib.task_definition_arn}:${module.lib.ecs-service-name}"
   ]
+  vpc_id             = module.lib.vpc_id
+ 
 
  /* health_check {
     healthy_threshold   = 2
