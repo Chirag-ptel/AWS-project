@@ -38,7 +38,7 @@ variable "task_definition_memory" {
   type        = number
 }
 
-variable "family" {
+/*variable "family" {
   type = string
   description = "The family name for the task definition"
 }
@@ -51,7 +51,7 @@ variable "network_mode" {
 variable "task_role_arn" {
   type = string
   description = "The ARN of the IAM role that grants permissions for the task"
-}
+}*/
 
 variable "desired-td-count" {
   type = string
