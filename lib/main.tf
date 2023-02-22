@@ -44,6 +44,6 @@ output "task_definition_arn" {
    value = data.terraform_remote_state.ecs.outputs.task_definition_arn
 }*/
 
-output "tak-definition_family" {
+output "task_definition_family" {
    value = data.terraform_remote_state.ecs.outputs.task_definition_family
 }

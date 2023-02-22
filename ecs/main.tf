@@ -77,3 +77,7 @@ resource "aws_ecs_service" "ecs-service" {
     container_port = var.task_container_port
   }*/
 }
+
+/*output "task_definition_family" {
+  value =aws_ecs_task_definition.my_task_definition.family
+}*/
