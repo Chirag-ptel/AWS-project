@@ -22,3 +22,7 @@ data "terraform_remote_state" "vpc" {
  output "public_subnets" {
     value = data.terraform_remote_state.vpc.outputs.public_subnets
  }
+
+ output "private_subnets" {
+    value = data.terraform_remote_state.vpc.outputs.private_subnets
+ }
