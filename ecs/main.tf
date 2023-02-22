@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
    cpu    = var.task_definition_cpu
    memory = var.task_definition_memory
   container_definitions    = jsonencode([{
-    name   = "${var.name}-ecs-task-definition"
+    name   = "${var.name}-container"
     image  = var.container_image
     portMappings = [{
       containerPort = var.task_container_port
@@ -70,4 +70,10 @@ resource "aws_ecs_service" "ecs-service" {
     security_groups = [module.lib.default_security_group_id]
     subnets         = module.lib.private_subnets
   }
+
+  /*load_balancer {
+    target_group_arn = 
+    container_name = "${var.name}-container"
+    container_port = var.task_container_port
+  }*/
 }
