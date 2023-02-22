@@ -39,11 +39,11 @@ resource "aws_ecs_cluster""ecs-cluster" {
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family                   = "${var.name}-task"
    requires_compatibilities = ["FARGATE"]
+   cpu    = var.task_definition_cpu
+   memory = var.task_definition_memory
   container_definitions    = jsonencode([{
     name   = "${var.name}-ecs-task-definition"
     image  = var.container_image
-    cpu    = var.task_definition_cpu
-    memory = var.task_definition_memory
     portMappings = [{
       containerPort = var.task_container_port
     }]
