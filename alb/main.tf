@@ -47,7 +47,7 @@ resource "aws_lb_listener" "alb_listener" {
 }
 
 resource "aws_lb_target_group" "alb_target_group" {
-  name               = "var.name"
+  name               = var.name
   port               = 80
   protocol           = "HTTP"
   target_type        = "ip"
