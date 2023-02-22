@@ -8,7 +8,7 @@ echo $folder
 echo $action
 cd $folder
 terraform init
-if [ $action=plan ]
+if [ $action == plan ]
 then
     terraform $action -var-file="$env/terraform.tfvars"
 else
