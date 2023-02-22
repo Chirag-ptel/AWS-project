@@ -28,13 +28,7 @@ data "terraform_remote_state" "vpc" {
  }
 
  data "aws_lb" "alb" {
-  backend = "s3"
-  config = {
-    bucket = "my-s3-bucket-for-tfstate"
-    key    = "quest/dev/alb/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
+ }
    
 output "target_group_arn" {
    value = aws_lb_target_group.alb_target_group.arn
