@@ -2,6 +2,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+module "lib" {
+  source = "../lib/"
+}
+
 terraform {
   backend "s3" {
     bucket = "my-s3-bucket-for-tfstate"
@@ -61,4 +65,9 @@ resource "aws_ecs_service" "ecs-service" {
   cluster = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task-definition.arn
   desired_count = var.desired-td-count
+
+  network_configuration {
+    security_groups = [module.lib.default_security_group_id]
+    subnets         = module.lib.private_subnets
+  }
 }
