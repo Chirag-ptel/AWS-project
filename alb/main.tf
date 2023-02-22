@@ -69,7 +69,7 @@ resource  "aws_lb_target_group" "alb_target_group" {
 
 resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
-  target_id        = module.lib.ecs_service_id
+  target_id        = module.lib.task_definition_family
   port             = 80
 
   /*depends_on = [
