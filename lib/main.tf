@@ -36,7 +36,7 @@ data "terraform_remote_state" "vpc" {
   }
  }
    
-output "ecs_cluster_name" {
+/*output "ecs_cluster_name" {
   value =data.terraform_remote_state.ecs.outputs.ecs_cluster_name
 }
 
@@ -46,4 +46,8 @@ output "task_definition_arn" {
 
 output "ecs-service-name" {
    value = data.terraform_remote_state.ecs.outputs.ecs_service_name
+}*/
+
+output  "fargate-task-as-target" {
+  value = data.terraform_remote_state.ecs.outputs.fargate_tasks
 }

@@ -51,11 +51,9 @@ resource  "aws_lb_target_group" "alb_target_group" {
   port               = 80
   protocol           = "HTTP"
   target_type        = "ip"
-   targets = [
-    "${module.lib.task_definition_arn}:${module.lib.ecs-service-name}"
-  ]
   vpc_id             = module.lib.vpc_id
  
+
 
  /* health_check {
     healthy_threshold   = 2
@@ -65,6 +63,15 @@ resource  "aws_lb_target_group" "alb_target_group" {
     unhealthy_threshold = 2
     path                = "/health"
   }*/
+
+   dynamic "target" {
+    for_each = module.lib.fargate-task-as-target
+
+    content {
+      target_id = target.value
+      port      = "80"
+    }
+  }
 
   tags = {
     Name = "var.name"
