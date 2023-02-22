@@ -44,6 +44,6 @@ output "task_definition_arn" {
    value = data.terraform_remote_state.ecs.outputs.task_definition_arn
 }*/
 
-output "ecs_service_id" {
-   value = data.terraform_remote_state.ecs.outputs.service_id
+output "service_id" {
+   value = data.terraform_remote_state.ecs.outputs.ecs_service_id
 }
