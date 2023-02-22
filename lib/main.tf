@@ -27,7 +27,7 @@ data "terraform_remote_state" "vpc" {
     value = data.terraform_remote_state.vpc.outputs.private_subnets
  }
 
- /*data "terraform_remote_state" "ecs" {
+ data "terraform_remote_state" "ecs" {
     backend = "s3"
   config = {
     bucket = "my-s3-bucket-for-tfstate"
@@ -42,4 +42,9 @@ output "ecs_cluster_name" {
 
 output "task_definition_arn" {
    value = data.terraform_remote_state.ecs.outputs.task_definition_arn
-}*/
+}
+
+output "ecs_service_id" {
+   value = data.terraform_remote_state.ecs.outputs.ecs_service_id
+  
+}
