@@ -2,6 +2,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
+terraform {
+  backend "s3" {
+    bucket = "my-s3-bucket-for-tfstate"
+    key    = "quest/dev/ecs/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+
 resource "aws_iam_role" "ecs_task_execution_role" {
   name = "${var.name}-ecs-task-role"
   assume_role_policy = jsonencode({
@@ -18,10 +27,10 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 }
 
-/*resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
+resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}*/
+}
 
 resource "aws_ecs_cluster""ecs-cluster" {
   name = "${var.name}-ecs-cluster"
