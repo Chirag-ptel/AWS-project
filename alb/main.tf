@@ -52,6 +52,9 @@ resource  "aws_lb_target_group" "alb_target_group" {
   protocol           = "HTTP"
   target_type        = "ip"
   vpc_id             = module.lib.vpc_id
+  targets = [
+    "${module.lib.task_definition_arn}:${module.lib.ecs-service-name}"
+  ]
 
  /* health_check {
     healthy_threshold   = 2
@@ -67,16 +70,16 @@ resource  "aws_lb_target_group" "alb_target_group" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
+/*resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
   target_id        = module.lib.task_definition_family
   port             = 80
 
-  /*depends_on = [
+  depends_on = [
     aws_lb_listener.alb_listener,
     aws_ecs_service.ecs_service,
-  ]*/
-}
+  ]
+}*/
 
 
 
