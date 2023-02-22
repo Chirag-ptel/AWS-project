@@ -38,6 +38,7 @@ resource "aws_ecs_cluster""ecs-cluster" {
 
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family                   = "${var.name}-task"
+   requires_compatibilities = ["FARGATE"]
   container_definitions    = jsonencode([{
     name   = "${var.name}-ecs-task-definition"
     image  = var.container_image
@@ -60,5 +61,4 @@ resource "aws_ecs_service" "ecs-service" {
   cluster = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task-definition.arn
   desired_count = var.desired-td-count
-  launch_type = "FARGATE"
 }
