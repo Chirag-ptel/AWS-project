@@ -69,6 +69,15 @@ resource  "aws_lb_target_group" "alb_target_group" {
 
 resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
+  target_id        = aws_instance.web.id
   port             = 80
+   target_type      = "ip"
+
+  /*depends_on = [
+    aws_lb_listener.alb_listener,
+    aws_ecs_service.ecs_service,
+  ]*/
 }
+
+
 

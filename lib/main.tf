@@ -27,9 +27,19 @@ data "terraform_remote_state" "vpc" {
     value = data.terraform_remote_state.vpc.outputs.private_subnets
  }
 
- data "aws_lb" "alb" {
+ data "terraform_remote_state" "ecs" {
+    backend = "s3"
+  config = {
+    bucket = "my-s3-bucket-for-tfstate"
+    key    = "quest/dev/ecs/terraform.tfstate"
+    region = "us-east-1"
+  }
  }
    
-output "target_group_arn" {
-   value = aws_lb_target_group.alb_target_group.arn
+output "ecs_cluster_name" {
+  value =data.terraform_remote_state.ecs.outputs.ecs_cluster_name
+}
+
+output "task_definition_arn" {
+   value = data.terraform_remote_state.ecs.outputs.task_definition_arn
 }
