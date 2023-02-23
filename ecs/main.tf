@@ -76,7 +76,18 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
           containerPort = 3000
           hostPort      = 3000
         }
-      ]
+    ]
+
+    log_configuration = {
+      log_driver = "awslogs"
+      options = {
+        "awslogs-create-group"    = "true"
+        "awslogs-group"           = "awslogs-quest-td"
+        "awslogs-region"          = "us-east-1"
+        "awslogs-stream-prefix"   = "awslogs-quest"
+      }
+    }
+
     /*environment = [{
       name  = "EXAMPLE_ENV_VAR"
       value = var.example_env_var
