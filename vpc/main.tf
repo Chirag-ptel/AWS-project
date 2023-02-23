@@ -77,14 +77,58 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route" "public" {
+resource "aws_route_table_association" "private" {
+  count = 3
+
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
+}
+
+/*resource "aws_route" "public" {
    route_table_id = aws_route_table.public.id
    destination_cidr_block = "0.0.0.0/0"
    gateway_id = aws_internet_gateway.my-igw.id
-}
+}*/
 
-resource "aws_route_table_association" "private" {
+/*resource "aws_route_table_association" "private" {
     count = 3
     subnet_id = aws_subnet.private[count.index].id
     route_table_id = aws_route_table.private.id
+}*/
+
+resource "aws_nat_gateway" "my-nat-gw" {
+  count = 3
+
+  allocation_id = aws_eip.example[count.index].id
+  subnet_id     = aws_subnet.private[count.index].id
+
+  tags = {
+    Name = "my-nat-gw-${count.index}"
+  }
 }
+
+resource "aws_eip" "my-eip" {
+  count = 3
+
+  vpc = true
+
+  tags = {
+    Name = "my-eip-${count.index}"
+  }
+}
+
+resource "aws_route_table" "private" {
+  count = 3
+
+  vpc_id = aws_vpc.my-vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.my-nat-gw[count.index].id
+  }
+
+  tags = {
+    Name = "my-private-rt-${count.index}"
+  }
+}
+
