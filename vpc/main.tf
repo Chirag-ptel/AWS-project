@@ -133,7 +133,7 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_security_group" "public" {
-  name_prefix = "example-public-sg-"
+  name_prefix = "my-public-sg-"
 
   ingress {
     from_port = 22
@@ -158,7 +158,7 @@ resource "aws_security_group" "public" {
 }
 
 resource "aws_security_group" "private" {
- name_prefix = "example-private-sg-"
+ name_prefix = "my-private-sg-"
   
   ingress {
     from_port = 22
