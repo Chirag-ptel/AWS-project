@@ -27,6 +27,21 @@ data "terraform_remote_state" "vpc" {
     value = data.terraform_remote_state.vpc.outputs.private_subnets
  }
 
+ output "security_group_id" {
+  value = try(
+    data.terraform_remote_state.vpc.outputs.security_groups.*.id[
+      index(
+        [
+          for sg in data.terraform_remote_state.vpc.outputs.security_groups :
+          sg.name_prefix == "my-private-sg-"
+        ],
+        0
+      )
+    ],
+    null
+  )
+}
+
  /*data "terraform_remote_state" "ecs" {
     backend = "s3"
   config = {
