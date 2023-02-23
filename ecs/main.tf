@@ -77,3 +77,7 @@ resource "aws_ecs_service" "ecs-service" {
     container_port = var.task_container_port
   }*/
 }
+
+output "ecs-service-id" {
+  value = aws_ecs_service.ecs-service.id
+}
