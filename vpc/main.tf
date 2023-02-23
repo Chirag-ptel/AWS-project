@@ -31,7 +31,7 @@ resource "aws_subnet" "public" {
   cidr_block = "10.0.${count.index}.0/24"
   vpc_id = aws_vpc.my-vpc.id
   map_public_ip_on_launch = true
-  availability_zone = element(var.availability_zones, count.index)
+  availability_zone = element(var.availability_zones.count.index)
   
   tags = {
     Name = "my-public-${count.index + 1}"
@@ -53,6 +53,11 @@ resource "aws_subnet" "private" {
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.my-vpc.id
   
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.my-igw.id
+  }
+
     tags = {
       Name = "my-public-rt"
   }
