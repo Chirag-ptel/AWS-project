@@ -76,7 +76,7 @@ resource "aws_lb_target_group_attachment" "alb_tg_attachment" {
 
   /*depends_on = [
     aws_lb_listener.alb_listener,
-    aws_ecs_service.ecs_service,
+    aws_ecs_service.ecs-service,
   ]*/
 }
 
