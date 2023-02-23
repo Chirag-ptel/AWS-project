@@ -71,7 +71,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   network_configuration {
     security_groups = [module.lib.default_security_group_id]
-    subnets         = module.lib.private_subnets
+    subnets         = module.lib.public_subnets
   }
 
   /*load_balancer {
