@@ -90,6 +90,7 @@ resource "aws_ecs_service" "ecs-service" {
   name = "${var.name}-ecs-service"
   cluster = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task-definition.arn
+  launch_type = "FARGATE"
   desired_count = var.desired-td-count
 
   network_configuration {
