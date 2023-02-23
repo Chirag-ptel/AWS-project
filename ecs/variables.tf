@@ -6,13 +6,12 @@ variable "name" {
 /*variable "container_definitions" {
   type = list
   description = "A list of container definitions for the task"
-}*/
+}
 
 variable "container_image" {
   type = string
   description = "the image used to start the container"
-  
-}
+}*/
 
 variable "task_container_port" {
   description = "The port number on the container that is bound to the user-specified or automatically assigned host port"
