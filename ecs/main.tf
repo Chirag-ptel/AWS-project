@@ -48,6 +48,8 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
   container_definitions    = jsonencode([{
     name   = "${var.name}-container"
     image  = "public.ecr.aws/g4t5d3x4/aws-quest-node-image:latest"
+    cpu       = 256
+    memory    = 512
     portMappings = [
         {
           containerPort = 3000
