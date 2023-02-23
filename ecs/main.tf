@@ -47,10 +47,13 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
    memory = var.task_definition_memory
   container_definitions    = jsonencode([{
     name   = "${var.name}-container"
-    image  = var.container_image
-    portMappings = [{
-      containerPort = var.task_container_port
-    }]
+    image  = "var.container_image"
+    portMappings = [
+        {
+          containerPort = 3000
+          hostPort      = 3000
+        }
+      ]
     /*environment = [{
       name  = "EXAMPLE_ENV_VAR"
       value = var.example_env_var
