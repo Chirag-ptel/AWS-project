@@ -99,7 +99,7 @@ resource "aws_route_table_association" "private" {
 resource "aws_nat_gateway" "my-nat-gw" {
   count = 3
 
-  allocation_id = aws_eip.example[count.index].id
+  allocation_id = aws_eip.my-eip[count.index].id
   subnet_id     = aws_subnet.private[count.index].id
 
   tags = {
