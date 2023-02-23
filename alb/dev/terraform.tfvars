@@ -1,1 +1,1 @@
-name  = "quest-dev-demo-alb"
+name  = "quest-dev-alb"
