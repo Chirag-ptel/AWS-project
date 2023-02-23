@@ -105,8 +105,9 @@ resource "aws_ecs_service" "ecs-service" {
   desired_count = var.desired-td-count
 
   network_configuration {
-    security_groups = [module.lib.security_group_id]
-    subnets         = module.lib.private_subnets
+    /*security_groups = [module.lib.security_group_id]*/
+    assign_public_ip = true  
+    subnets         = module.lib.public_subnets
   }
 
   /*load_balancer {
