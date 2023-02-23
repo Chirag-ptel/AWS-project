@@ -63,13 +63,13 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_route_table" "private" {
+/*resource "aws_route_table" "private" {
   vpc_id = aws_vpc.my-vpc.id
    
    tags = {
      Name = "my-private-rt"
   }
-}
+}*/
 
 resource "aws_route_table_association" "public" {
   count = 3
