@@ -82,7 +82,7 @@ resource "aws_ecs_service" "ecs-service" {
   desired_count = 3
 
   network_configuration {
-    /*security_groups = ["${aws_security_group.service_security_group.id}"]*/
+    security_groups = ["${aws_security_group.service_security_group.id}"]
     assign_public_ip = true
     subnets         = module.lib.public_subnets
   }
