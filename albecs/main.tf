@@ -45,7 +45,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
    cpu    = var.task_definition_cpu
    memory = var.task_definition_memory
   container_definitions    = jsonencode([{
-    name   = "${var.name}-container"
+    name   = "${var.name}-task"
     image  = "public.ecr.aws/g4t5d3x4/aws-quest-node-image:latest"
     cpu       = 256
     memory    = 512
