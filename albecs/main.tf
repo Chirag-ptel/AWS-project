@@ -14,7 +14,7 @@ terraform {
   }
 }
 
-resource "aws_iam_role" "ecs_task_execution_role" {
+resource "aws_iam_role" "ecsTaskExecutionRole" {
   name = "${var.name}-ecs-task-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -30,8 +30,8 @@ resource "aws_iam_role" "ecs_task_execution_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attachment" {
-  role       = "${aws_iam_role.ecs_task_execution_role.name}"
+resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
+  role       = "${aws_iam_role.ecsTaskExecutionRole.name}"
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
@@ -71,7 +71,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
     }]*/
   }])
   network_mode             = "awsvpc"
-  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 }
 
 resource "aws_ecs_service" "ecs-service" {
@@ -79,7 +79,7 @@ resource "aws_ecs_service" "ecs-service" {
   cluster = aws_ecs_cluster.ecs-cluster.id
   task_definition = aws_ecs_task_definition.ecs-task-definition.arn
   launch_type = "FARGATE"
-  desired_count = 1
+  desired_count = 3
 
   network_configuration {
     /*security_groups = ["${aws_security_group.service_security_group.id}"]*/
@@ -87,8 +87,89 @@ resource "aws_ecs_service" "ecs-service" {
     subnets         = module.lib.public_subnets
   }
   load_balancer {
-    target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:155358046204:targetgroup/quest-dev-alb/6754b4c4e28447dd"
-    container_name = "${var.name}-container"
+    target_group_arn = aws_lb_target_group.alb_target_group.arn
+    container_name = aws_ecs_task_definition.ecs-task-definition.family
     container_port = 3000
+  }
+}
+
+resource "aws_security_group" "service_security_group" {
+  vpc_id = module.lib.vpc_id
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    # Only allowing traffic in from the load balancer security group
+    security_groups = ["${aws_security_group.lb_security_group.id}"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+
+
+
+resource "aws_lb" "alb" {
+  name               = var.name
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = ["${aws_security_group.lb_security_group.id}"]
+  subnets            = module.lib.public_subnets
+
+  tags = {
+    Name = "var.name"
+  }
+}
+
+resource "aws_security_group" "lb_security_group" {
+  vpc_id = module.lib.vpc_id
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource  "aws_lb_target_group" "alb_target_group" {
+  name               = var.name
+  port               = 80
+  protocol           = "HTTP"
+  target_type        = "ip"
+  vpc_id             = module.lib.vpc_id
+ 
+
+
+  health_check {
+    healthy_threshold   = 2
+    interval            = 30
+    protocol            = "HTTP"
+    timeout             = 5
+    unhealthy_threshold = 2
+    path                = "/"
+  }
+}
+
+resource "aws_lb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb_target_group.arn
   }
 }
