@@ -96,6 +96,23 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 }
 
+resource "aws_security_group" "service_security_group" {
+  ingress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    # Only allowing traffic in from the load balancer security group
+    security_groups = ["sg-0abfba7b686cff5b7"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_ecs_service" "ecs-service" {
   name = "${var.name}-ecs-service"
   cluster = aws_ecs_cluster.ecs-cluster.id
