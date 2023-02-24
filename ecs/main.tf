@@ -97,6 +97,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
 }
 
 resource "aws_security_group" "service_security_group" {
+  vpc_id = module.lib.vpc_id
   ingress {
     from_port = 0
     to_port   = 0
