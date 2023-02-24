@@ -23,6 +23,22 @@ terraform {
   }
 }
 
+resource "aws_security_group" "lb_security_group" {
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] 
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_lb" "alb" {
   name               = var.name
   internal           = false
@@ -79,22 +95,3 @@ resource  "aws_lb_target_group" "alb_target_group" {
     aws_ecs_service.ecs-service,
   ]
 }*/
-
-resource "aws_security_group" "lb_security_group" {
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-
-
