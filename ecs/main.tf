@@ -123,7 +123,7 @@ resource "aws_ecs_service" "ecs-service" {
 
   network_configuration {
     security_groups = ["${aws_security_group.service_security_group.id}"]
-    assign_public_ip = true  
+    assign_public_ip = false
     subnets         = module.lib.private_subnets
   }
 
