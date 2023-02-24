@@ -77,7 +77,6 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
           hostPort      = 3000
         }
     ]
-
     log_configuration = {
       log_driver = "awslogs"
       options = {
@@ -110,11 +109,11 @@ resource "aws_ecs_service" "ecs-service" {
     subnets         = module.lib.private_subnets
   }
 
-  /*load_balancer {
-    target_group_arn = 
+  load_balancer {
+    target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:155358046204:targetgroup/quest-dev-alb/6754b4c4e28447dd"
     container_name = "${var.name}-container"
     container_port = var.task_container_port
-  }*/
+  }
 }
 
 output "ecs-service-id" {
