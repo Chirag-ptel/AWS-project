@@ -86,9 +86,9 @@ resource "aws_ecs_service" "ecs-service" {
     assign_public_ip = true
     subnets         = module.lib.public_subnets
   }
-  load_balancer {
+  /*load_balancer {
     target_group_arn = "arn:aws:elasticloadbalancing:us-east-1:155358046204:targetgroup/quest-dev-alb/6754b4c4e28447dd"
     container_name = "${var.name}-container"
     container_port = 3000
-  }
+  }*/
 }
