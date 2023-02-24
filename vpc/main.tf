@@ -77,13 +77,6 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_route_table_association" "private" {
-  count = 3
-
-  subnet_id      = aws_subnet.private[count.index].id
-  route_table_id = aws_route_table.private[count.index].id
-}
-
 /*resource "aws_route" "public" {
    route_table_id = aws_route_table.public.id
    destination_cidr_block = "0.0.0.0/0"
@@ -100,7 +93,7 @@ resource "aws_nat_gateway" "my-nat-gw" {
   count = 3
 
   allocation_id = aws_eip.my-eip[count.index].id
-  subnet_id     = aws_subnet.private[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
 
   tags = {
     Name = "my-nat-gw-${count.index}"
@@ -130,6 +123,13 @@ resource "aws_route_table" "private" {
   tags = {
     Name = "my-private-rt-${count.index}"
   }
+}
+
+resource "aws_route_table_association" "private" {
+  count = 3
+
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
 }
 
 resource "aws_security_group" "public" {
