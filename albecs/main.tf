@@ -84,7 +84,7 @@ resource "aws_ecs_service" "ecs-service" {
   network_configuration {
     security_groups = ["${aws_security_group.service_security_group.id}"]
     assign_public_ip = true
-    subnets         = module.lib.public_subnets
+    subnets         = module.lib.private_subnets
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
