@@ -43,7 +43,7 @@ resource "aws_lb" "alb" {
   name               = var.name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_lb_security_group.lb_security_group.id]
+  security_groups    = ["${aws_security_group.lb_security_group.id}"]
   subnets            = module.lib.public_subnets
 
   tags = {
