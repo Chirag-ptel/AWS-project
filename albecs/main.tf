@@ -186,7 +186,12 @@ resource "aws_lb_listener" "alb_listener" {
   }
 }
 
-resource "aws_alb_listener" "alb_listener_443" {
+resource "aws_lb_listener_certificate" "example" {
+  listener_arn    = aws_lb_listener.alb_listener.arn
+  certificate_arn = "arn:aws:acm:us-east-1:155358046204:certificate/5d08eb6f-0065-4ec5-a51f-5ee2ddb78eb5"
+}
+
+/*resource "aws_alb_listener" "alb_listener_443" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "443"
   protocol          = "HTTPS"
@@ -196,4 +201,4 @@ resource "aws_alb_listener" "alb_listener_443" {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
     type             = "forward"
   }
-}
+}*/
