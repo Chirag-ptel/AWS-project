@@ -67,7 +67,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
 
     environment = [{
       name  = "SECRET_WORD"
-      value = "Hemlo Fraands"
+      value = "Hello Fraands"
     }]
   }])
   network_mode             = "awsvpc"
@@ -163,7 +163,7 @@ resource  "aws_lb_target_group" "alb_target_group" {
   }
 }
 
-resource "aws_lb_listener" "alb_listener" {
+resource "aws_lb_listener" "alb_listener_80" {
   load_balancer_arn = aws_lb.alb.arn
   port              = "80"
   protocol          = "HTTP"
@@ -171,5 +171,17 @@ resource "aws_lb_listener" "alb_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.alb_target_group.arn
+  }
+}
+
+resource "aws_alb_listener" "alb_listener_443" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn = "arn:aws:acm:us-east-1:155358046204:certificate/5d08eb6f-0065-4ec5-a51f-5ee2ddb78eb5"
+   
+  default_action {
+    target_group_arn = aws_lb_target_group.alb_target_group.arn
+    type             = "forward"
   }
 }
