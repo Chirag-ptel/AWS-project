@@ -186,10 +186,6 @@ resource "aws_lb_listener" "alb_listener" {
   }
 }
 
-resource "aws_lb_listener_certificate" "alb_certificate" {
-  listener_arn    = aws_lb_listener.alb_listener.arn
-  certificate_arn = aws_acm_certificate.alb_certificate.arn
-}
 
 resource "aws_alb_listener" "alb_listener_443" {
   load_balancer_arn = aws_lb.alb.arn
