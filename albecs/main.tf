@@ -65,10 +65,10 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
       }
     }
 
-    /*environment = [{
-      name  = "EXAMPLE_ENV_VAR"
-      value = var.example_env_var
-    }]*/
+    environment = [{
+      name  = "SECRET_WORD"
+      value = "Hemlo Fraands"
+    }]
   }])
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
