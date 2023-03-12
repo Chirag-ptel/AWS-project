@@ -41,32 +41,3 @@ data "terraform_remote_state" "vpc" {
     null
   )
 }
-
- /*data "terraform_remote_state" "ecs" {
-    backend = "s3"
-  config = {
-    bucket = "my-s3-bucket-for-tfstate"
-    key    = "quest/dev/ecs/terraform.tfstate"
-    region = "us-east-1"
-  }
- }
-   
-output "ecs_cluster_name" {
-  value =data.terraform_remote_state.ecs.outputs.ecs_cluster_name
-}
-
-output "task_definition_arn" {
-   value = data.terraform_remote_state.ecs.outputs.ecs_task_definition_arn
-}
-
-output "ecs-service-name" {
-   value = data.terraform_remote_state.ecs.outputs.ecs_service_name
-}
-
-output  "fargate-task-as-target" {
-  value = data.terraform_remote_state.ecs.outputs.fargate_tasks
-}
-
-output "ecs-service-id" {
-   value = data.terraform_remote_state.ecs.outputs.ecs-service-id
-}*/
