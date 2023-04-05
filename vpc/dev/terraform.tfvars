@@ -1,1 +1,1 @@
-name = "quest-dev-vpc"
+name = "sample-dev-vpc"
