@@ -1,1 +1,1 @@
-name = "quest-dev"
+name = "sample-dev"
