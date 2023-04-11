@@ -42,8 +42,8 @@ resource "aws_ecs_cluster""ecs-cluster" {
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family                   = "${var.name}-task"
    requires_compatibilities = ["FARGATE"]
-   cpu    = var.task_definition_cpu
-   memory = var.task_definition_memory
+   cpu    = 1024
+   memory = 2048
   container_definitions    = jsonencode([{
     name   = "${var.name}-task"
     image  = "public.ecr.aws/g4t5d3x4/nginx-wp-image:latest"
