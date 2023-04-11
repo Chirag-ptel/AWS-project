@@ -80,7 +80,7 @@ resource "aws_ecs_service" "ecs-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
     container_name = aws_ecs_task_definition.ecs-task-definition.family
-    container_port = 3000
+    container_port = 80
   }
 }
 
