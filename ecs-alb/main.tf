@@ -47,8 +47,8 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
   container_definitions    = jsonencode([{
     name   = "${var.name}-task"
     image  = "public.ecr.aws/g4t5d3x4/nginx-wp-image:latest"
-    cpu       = 256
-    memory    = 512
+    cpu       = 1024
+    memory    = 2048
     portMappings = [
         {
           containerPort = 3000
