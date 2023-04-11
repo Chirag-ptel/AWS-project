@@ -51,8 +51,8 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
     memory    = 2048
     portMappings = [
         {
-          containerPort = 3000
-          hostPort      = 3000
+          containerPort = 80
+          hostPort      = 80
         }
     ]
   
