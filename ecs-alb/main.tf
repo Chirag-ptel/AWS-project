@@ -42,17 +42,17 @@ resource "aws_ecs_cluster""ecs-cluster" {
 resource "aws_ecs_task_definition" "ecs-task-definition" {
   family                   = "${var.name}-task"
    requires_compatibilities = ["FARGATE"]
-   cpu    = 1024
-   memory = 2048
+   cpu    = var.task_definition_cpu
+   memory = var.task_definition_memory
   container_definitions    = jsonencode([{
     name   = "${var.name}-task"
-    image  = "public.ecr.aws/g4t5d3x4/nginx-wp-image:latest"
-    cpu       = 1024
-    memory    = 2048
+    image  = "public.ecr.aws/g4t5d3x4/aws-quest-node-image:latest"
+    cpu       = 256
+    memory    = 512
     portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = 3000
+          hostPort      = 3000
         }
     ]
   
@@ -80,7 +80,7 @@ resource "aws_ecs_service" "ecs-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
     container_name = aws_ecs_task_definition.ecs-task-definition.family
-    container_port = 80
+    container_port = 3000
   }
 }
 
