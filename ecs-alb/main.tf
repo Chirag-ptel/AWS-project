@@ -46,7 +46,7 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
    memory = var.task_definition_memory
   container_definitions    = jsonencode([{
     name   = "${var.name}-task"
-    image  = "public.ecr.aws/g4t5d3x4/aws-quest-node-image:latest"
+    image  = "public.ecr.aws/g4t5d3x4/nginx-wp-image:latest"
     cpu       = 256
     memory    = 512
     portMappings = [
