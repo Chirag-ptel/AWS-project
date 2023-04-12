@@ -46,13 +46,13 @@ resource "aws_ecs_task_definition" "ecs-task-definition" {
    memory = var.task_definition_memory
   container_definitions    = jsonencode([{
     name   = "${var.name}-task"
-    image  = "public.ecr.aws/g4t5d3x4/aws-quest-node-image:latest"
+    image  = "public.ecr.aws/g4t5d3x4/reverseproxy:latest"
     cpu       = 256
     memory    = 512
     portMappings = [
         {
-          containerPort = 3000
-          hostPort      = 3000
+          containerPort = 80
+          hostPort      = 80
         }
     ]
   
@@ -80,7 +80,7 @@ resource "aws_ecs_service" "ecs-service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.alb_target_group.arn
     container_name = aws_ecs_task_definition.ecs-task-definition.family
-    container_port = 3000
+    container_port = 80
   }
 }
 
