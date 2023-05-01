@@ -1,0 +1,31 @@
+name: Terraform Githug Actions
+on: 
+ push:
+  branches: [master]
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Checkout Code
+     uses: actions/checkout@v2
+   - name: AWS Credentials
+     uses: aws-actions/configure-aws-credentials@v1
+     with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+   - name: Terraform init
+     env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+     run:  |
+       echo "Hello"
+       cd vpc 
+       terraform init
+   - name: Terraform plan
+     env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+     run: |
+      pwd
+      terraform plan
