@@ -13,20 +13,23 @@ jobs:
      with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+        aws-region: ap-south-1
    - name: Terraform init
      env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
      run:  |
        echo "Hello"
+       pwd
+       ls
        cd vpc 
+       pwd
        terraform init
+       ls
    - name: Terraform plan
      env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-     run: |
-      pwd
-      terraform plan
-      #aaa
+     run:  |
+       pwd
+       terraform plan
