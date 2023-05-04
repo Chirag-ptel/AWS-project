@@ -1,12 +1,12 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 terraform {
   backend "s3" {
-    bucket = "my-s3-bucket-for-tfstate"
-    key    = "quest/dev/vpc/terraform.tfstate"
-    region = "us-east-1"
+    bucket = "petadd-s3-bucket-for-tfstate"
+    key    = "dev/vpc/terraform.tfstate"
+    region = "ap-south-1"
   }
 }
 
