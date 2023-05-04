@@ -40,4 +40,4 @@ jobs:
      run :  |
        pwd
        cd vpc 
-       terraform appply -auto-approve
+       terraform apply -auto-approve
