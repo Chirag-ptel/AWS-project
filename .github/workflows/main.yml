@@ -1,20 +1,20 @@
 name: Terraform Githug Actions
 on: 
-workflow_dispatch:
-  inputs:
-    service_name:
-      type: choice
-      discription: 'Choose the service name'
-      options:
-      - vpc
-      - ecs-alb
-    action:
-      type: choice
-      discription: 'Which action do you want to perform?'
-      options:
-      - plan
-      - apply -auto-approve
-      - destroy -auto-approve
+ workflow_dispatch:
+   inputs:
+     service_name:
+       type: choice
+       discription: 'Choose the service name'
+       options:
+       - vpc
+       - ecs-alb
+     action:
+       type: choice
+       discription: 'Which action do you want to perform?'
+       options:
+       - plan
+       - apply -auto-approve
+       - destroy -auto-approve
 #  push:
 #   branches: [master]
 jobs:
