@@ -1,7 +1,22 @@
 name: Terraform Githug Actions
 on: 
- push:
-  branches: [master]
+workflow_dispatch:
+  inputs:
+    service_name:
+      type: choice
+      discription: 'Choose the service name'
+      options:
+      - vpc
+      - ecs-alb
+    action:
+      type: choice
+      discription: 'Which action do you want to perform?'
+      options:
+      - plan
+      - apply -auto-approve
+      - destroy -auto-approve
+#  push:
+#   branches: [master]
 jobs:
  build:
   runs-on: ubuntu-latest
@@ -22,22 +37,22 @@ jobs:
        echo "Hello"
        pwd
        ls
-       cd vpc 
+       cd ${{ github.event.inputs.service_name }}"
        pwd
        terraform init
-   - name: Terraform plan
+   - name: Terraform ${{ github.event.inputs.action }}"
      env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
      run:  |
        pwd
-       cd vpc
-       terraform plan
-   - name : terraform apply
-     env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-     run :  |
-       pwd
-       cd vpc 
-       terraform apply -auto-approve
+       cd ${{ github.event.inputs.service_name }}"
+       terraform ${{ github.event.inputs.action }}"
+  #  - name : terraform apply
+  #    env:
+  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #    run :  |
+  #      pwd
+  #      cd vpc 
+  #      terraform apply -auto-approve
